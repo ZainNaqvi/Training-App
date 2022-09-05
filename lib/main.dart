@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:training_app/detail_screen.dart';
 import 'package:training_app/home_page.dart';
 
 void main() {

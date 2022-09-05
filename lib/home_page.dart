@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:training_app/detail_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -9,12 +10,33 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+final list = [
+  {
+    "title": "Soft skills training",
+    "img": "assets/images/banner.png",
+  },
+  {
+    "title": "Product or service training",
+    "img": "assets/images/banner.png",
+  },
+  {
+    "title": "Franchise training",
+    "img": "assets/images/banner.png",
+  },
+  {
+    "title": "Managerial and leadership training",
+    "img": "assets/images/banner.png",
+  }
+];
+
 class _HomePageState extends State<HomePage> {
+  // CUSTOM - LIST - OF - THE - TRAINING
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 70.h, horizontal: 16.w),
+        padding: EdgeInsets.only(top: 70.h, left: 16.w, right: 16.w),
         child: Column(
           children: [
             //HEADER - OF - THE - APP
@@ -81,7 +103,11 @@ class _HomePageState extends State<HomePage> {
                 Row(
                   children: [
                     GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => DetailScreen(),
+                          ));
+                        },
                         child: const Text(
                           "Details",
                           style: TextStyle(color: Colors.blueAccent),
@@ -203,7 +229,7 @@ class _HomePageState extends State<HomePage> {
             ),
             // STACK - WIDGET - WITH - TEXT - NO - SLEEP
             Container(
-              margin: EdgeInsets.only(top: 16.h),
+              margin: EdgeInsets.only(top: 16.h, bottom: 24.h),
               width: MediaQuery.of(context).size.width,
               height: 110.h,
               decoration: BoxDecoration(
@@ -259,6 +285,49 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ],
+              ),
+            ),
+            //  CUSTOM - GRID - VIEW
+            Expanded(
+              child: MediaQuery.removePadding(
+                context: context,
+                removeTop: true,
+                child: GridView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: 4,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 8,
+                    mainAxisSpacing: 8,
+                  ),
+                  itemBuilder: (context, index) => Container(
+                    width: 100.w,
+                    height: 100.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.r),
+                      color: Colors.black.withOpacity(0.02),
+                      image: DecorationImage(
+                        image: AssetImage(list[index]['img'].toString()),
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.only(top: 112.h),
+                          child: Text(
+                            list[index]['title'].toString(),
+                            style: TextStyle(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ),
           ],
