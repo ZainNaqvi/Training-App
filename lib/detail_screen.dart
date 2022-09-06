@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,7 +21,8 @@ class _DetailScreenState extends State<DetailScreen> {
 
   // CREATING - THE - LIST - HERE
   List videoInfo = [];
-
+  // BOOLEAN - FOR - CHANGING - CONTROLLER -
+  bool isShowVideo = false;
   //GET JSON
   Future<void> getJsonProverb() async {
     final String rawJson = await rootBundle.loadString('assets/json/data.json');
@@ -35,140 +35,180 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: const FractionalOffset(0.0, 0.4),
-            end: Alignment.topRight,
-            colors: [
-              Colors.teal.withOpacity(0.7),
-              Colors.teal.withOpacity(0.2),
-            ],
-          ),
-        ),
+        decoration: !isShowVideo
+            ? BoxDecoration(
+                gradient: LinearGradient(
+                  begin: const FractionalOffset(0.0, 0.4),
+                  end: Alignment.topRight,
+                  colors: [
+                    Colors.teal.withOpacity(0.7),
+                    Colors.teal.withOpacity(0.2),
+                  ],
+                ),
+              )
+            : BoxDecoration(
+                color: Colors.teal.withOpacity(0.7),
+              ),
         child: Column(
           children: [
-            Container(
-              padding: EdgeInsets.only(top: 64.h, left: 22.w, right: 22.w),
-              width: MediaQuery.of(context).size.width,
-              height: 250.h,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // CUSTOM - APP - BAR - OF - APPLICATION
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Icon(
-                          Icons.arrow_back_ios,
-                          color: Colors.white,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          // Navigator.of(context).pop();
-                        },
-                        child: const Icon(
-                          Icons.info,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                  // TITLE - TEXT - OF - THE - APPLICATION
-                  SizedBox(height: 18.h),
-                  Text(
-                    'Legs Toning',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24.sp,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  SizedBox(height: 8.h),
-                  Text(
-                    'and Glutes Workout',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24.sp,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  // BOXES - VIDEO - TIME - AND - TITLE
-                  SizedBox(height: 34.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 12.w, vertical: 2.h),
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.teal.withOpacity(0.3),
-                              Colors.teal.withOpacity(0.1),
-                            ],
-                            begin: Alignment.bottomLeft,
-                            end: Alignment.topRight,
-                          ),
-                          borderRadius: BorderRadius.circular(4.r),
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
+            !isShowVideo
+                ? Container(
+                    padding:
+                        EdgeInsets.only(top: 64.h, left: 22.w, right: 22.w),
+                    width: MediaQuery.of(context).size.width,
+                    height: 250.h,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // CUSTOM - APP - BAR - OF - APPLICATION
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Icon(
-                              Icons.alarm,
-                              color: Colors.white,
-                              size: 20.sp,
+                            InkWell(
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Icon(
+                                Icons.arrow_back_ios,
+                                color: Colors.white,
+                              ),
                             ),
-                            SizedBox(width: 4.w),
-                            const Text(
-                              "68 min",
-                              style: TextStyle(color: Colors.white),
+                            GestureDetector(
+                              onTap: () {
+                                // Navigator.of(context).pop();
+                              },
+                              child: const Icon(
+                                Icons.info,
+                                color: Colors.white,
+                              ),
                             ),
                           ],
                         ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 12.w, vertical: 2.h),
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.teal.withOpacity(0.3),
-                              Colors.teal.withOpacity(0.1),
-                            ],
-                            begin: Alignment.bottomLeft,
-                            end: Alignment.topRight,
+                        // TITLE - TEXT - OF - THE - APPLICATION
+                        SizedBox(height: 18.h),
+                        Text(
+                          'Legs Toning',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24.sp,
+                            fontWeight: FontWeight.w700,
                           ),
-                          borderRadius: BorderRadius.circular(4.r),
                         ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
+                        SizedBox(height: 8.h),
+                        Text(
+                          'and Glutes Workout',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24.sp,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        // BOXES - VIDEO - TIME - AND - TITLE
+                        SizedBox(height: 34.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Icon(
-                              Icons.alarm,
-                              color: Colors.white,
-                              size: 20.sp,
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 12.w, vertical: 2.h),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Colors.teal.withOpacity(0.3),
+                                    Colors.teal.withOpacity(0.1),
+                                  ],
+                                  begin: Alignment.bottomLeft,
+                                  end: Alignment.topRight,
+                                ),
+                                borderRadius: BorderRadius.circular(4.r),
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.alarm,
+                                    color: Colors.white,
+                                    size: 20.sp,
+                                  ),
+                                  SizedBox(width: 4.w),
+                                  const Text(
+                                    "68 min",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ],
+                              ),
                             ),
-                            SizedBox(width: 4.w),
-                            const Text(
-                              "Resistent band , KetteBell",
-                              style: TextStyle(color: Colors.white),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 12.w, vertical: 2.h),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Colors.teal.withOpacity(0.3),
+                                    Colors.teal.withOpacity(0.1),
+                                  ],
+                                  begin: Alignment.bottomLeft,
+                                  end: Alignment.topRight,
+                                ),
+                                borderRadius: BorderRadius.circular(4.r),
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.alarm,
+                                    color: Colors.white,
+                                    size: 20.sp,
+                                  ),
+                                  SizedBox(width: 4.w),
+                                  const Text(
+                                    "Resistent band , KetteBell",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
+                  )
+                // VIDEO - PLAYER - CONTAINER
+                : Container(
+                    padding: EdgeInsets.only(
+                        top: 64.h, left: 18.w, right: 18.r, bottom: 12.h),
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Icon(
+                                Icons.arrow_back_ios,
+                                size: 20.sp,
+                                color: Colors.white,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {},
+                              child: Icon(
+                                Icons.info,
+                                size: 20.sp,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
-                ],
-              ),
-            ),
+
             // BOTTOM - CONTAINER - BOTTOM - WHITE - SHEET
             Expanded(
               child: OverflowBox(
@@ -223,6 +263,10 @@ class _DetailScreenState extends State<DetailScreen> {
                             itemCount: list.length,
                             itemBuilder: (context, index) => GestureDetector(
                               onTap: () {
+                                // SETTING - THE - STATE
+                                setState(() {
+                                  isShowVideo = true;
+                                });
                                 debugPrint(index.toString());
                               },
                               child: Container(
