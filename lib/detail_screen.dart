@@ -24,20 +24,24 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget playArea(BuildContext context) {
     final controller = _controller;
     if (controller != null && controller.value.isInitialized) {
-      return Container(
-        width: 300.w,
-        height: 300.h,
+      return AspectRatio(
+        aspectRatio: 16 / 9,
         child: VideoPlayer(controller),
       );
     } else {
-      return const Center(
-        child: CircularProgressIndicator(),
+      return const AspectRatio(
+        aspectRatio: 16 / 9,
+        child: Center(
+          child: CircularProgressIndicator(
+            color: Colors.white,
+          ),
+        ),
       );
     }
   }
 
   // DICLARING - VIDEO - PLAYER - CONTROLLER - GLOBALLY
-  late VideoPlayerController _controller;
+  VideoPlayerController? _controller;
   // CREATING - THE - LIST - HERE
   List videoInfo = [];
   // BOOLEAN - FOR - CHANGING - CONTROLLER -
@@ -209,33 +213,35 @@ class _DetailScreenState extends State<DetailScreen> {
                   )
                 // VIDEO - PLAYER - CONTAINER
                 : Container(
-                    padding: EdgeInsets.only(
-                        top: 64.h, left: 18.w, right: 18.r, bottom: 12.h),
                     width: MediaQuery.of(context).size.width,
                     child: Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Icon(
-                                Icons.arrow_back_ios,
-                                size: 20.sp,
-                                color: Colors.white,
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: 64.h, left: 18.w, right: 18.r, bottom: 12.h),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Icon(
+                                  Icons.arrow_back_ios,
+                                  size: 20.sp,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                            GestureDetector(
-                              onTap: () {},
-                              child: Icon(
-                                Icons.info,
-                                size: 20.sp,
-                                color: Colors.white,
+                              GestureDetector(
+                                onTap: () {},
+                                child: Icon(
+                                  Icons.info,
+                                  size: 20.sp,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                         playArea(context),
                       ],
