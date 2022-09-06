@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:training_app/home_page.dart';
+import 'package:video_player/video_player.dart';
 
 class DetailScreen extends StatefulWidget {
   DetailScreen({Key? key}) : super(key: key);
@@ -19,6 +20,24 @@ class _DetailScreenState extends State<DetailScreen> {
     super.initState();
   }
 
+  // PLAY - AREA - FUNCTION
+  Widget playArea(BuildContext context) {
+    final controller = _controller;
+    if (controller != null && controller.value.isInitialized) {
+      return Container(
+        width: 300.w,
+        height: 300.h,
+        child: VideoPlayer(controller),
+      );
+    } else {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+  }
+
+  // DICLARING - VIDEO - PLAYER - CONTROLLER - GLOBALLY
+  late VideoPlayerController _controller;
   // CREATING - THE - LIST - HERE
   List videoInfo = [];
   // BOOLEAN - FOR - CHANGING - CONTROLLER -
@@ -29,6 +48,19 @@ class _DetailScreenState extends State<DetailScreen> {
     setState(() {
       videoInfo = jsonDecode(rawJson);
     });
+  }
+
+  tapVidio(int index) {
+    final controller =
+        VideoPlayerController.network(videoInfo[index]['videoUrl']);
+    _controller = controller;
+    setState(() {});
+    // ignore: avoid_single_cascade_in_expression_statements
+    controller
+      ..initialize().then((_) {
+        controller.play();
+        setState(() {});
+      });
   }
 
   @override
@@ -54,7 +86,7 @@ class _DetailScreenState extends State<DetailScreen> {
             !isShowVideo
                 ? Container(
                     padding:
-                        EdgeInsets.only(top: 64.h, left: 22.w, right: 22.w),
+                        EdgeInsets.only(top: 54.h, left: 22.w, right: 22.w),
                     width: MediaQuery.of(context).size.width,
                     height: 250.h,
                     child: Column(
@@ -204,7 +236,8 @@ class _DetailScreenState extends State<DetailScreen> {
                               ),
                             ),
                           ],
-                        )
+                        ),
+                        playArea(context),
                       ],
                     ),
                   ),
@@ -265,9 +298,12 @@ class _DetailScreenState extends State<DetailScreen> {
                               onTap: () {
                                 // SETTING - THE - STATE
                                 setState(() {
-                                  isShowVideo = true;
+                                  if (isShowVideo == false) {
+                                    isShowVideo = true;
+                                  }
                                 });
                                 debugPrint(index.toString());
+                                tapVidio(index);
                               },
                               child: Container(
                                 margin: EdgeInsets.only(bottom: 8.h),

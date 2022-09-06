@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
         padding: EdgeInsets.only(top: 70.h, left: 16.w, right: 16.w),
         child: Column(
           children: [
-            //HEADER - OF - THE - APP
+            // HEADER - OF - THE - APP
             Row(
               children: [
                 // TEXT - TITLE
@@ -287,7 +287,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            //  CUSTOM - GRID - VIEW
+            // CUSTOM - GRID - VIEW
             Expanded(
               child: MediaQuery.removePadding(
                 context: context,
