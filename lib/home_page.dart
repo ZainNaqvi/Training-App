@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:training_app/detail_screen.dart';
 
@@ -98,14 +97,14 @@ class _HomePageState extends State<HomePage> {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                Expanded(child: SizedBox()),
+                const Expanded(child: SizedBox()),
                 // DETAIL - BUTTON
                 Row(
                   children: [
                     GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => DetailScreen(),
+                            builder: (context) => const DetailScreen(),
                           ));
                         },
                         child: const Text(
@@ -204,7 +203,7 @@ class _HomePageState extends State<HomePage> {
                           boxShadow: [
                             BoxShadow(
                               color: Colors.teal[900]!,
-                              offset: Offset(8, 10),
+                              offset: const Offset(8, 10),
                               blurRadius: 10,
                             ),
                             const BoxShadow(

@@ -6,7 +6,7 @@ import 'package:training_app/home_page.dart';
 import 'package:video_player/video_player.dart';
 
 class DetailScreen extends StatefulWidget {
-  DetailScreen({Key? key}) : super(key: key);
+  const DetailScreen({Key? key}) : super(key: key);
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
@@ -212,7 +212,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     ),
                   )
                 // VIDEO - PLAYER - CONTAINER
-                : Container(
+                : SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: Column(
                       children: [
@@ -275,7 +275,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               fontSize: 18.sp,
                             ),
                           ),
-                          Expanded(child: SizedBox()),
+                          const Expanded(child: SizedBox()),
                           const Icon(
                             Icons.loop,
                             color: Colors.teal,
